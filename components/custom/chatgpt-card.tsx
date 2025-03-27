@@ -1,0 +1,57 @@
+import { Code, WandSparkles, ExternalLink } from "lucide-react"
+import { Button } from "../ui/button"
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { LANGUAGES } from "@/constants";
+
+interface ChatGPTCardProps {
+  language: string;
+  clickFunc: (lang: string) => void;
+  showDialog: (open: boolean) => void;
+}
+
+const ChatGPTCard = ({ language, clickFunc, showDialog }: ChatGPTCardProps) => {
+
+  return (
+    <Card className="shadow-md h-full">
+      <div className="grid grid-cols-6 gap-2 sm:gap-4 bg-white p-2 border-b border-[#c8c8c8]">
+        <div className="col-span-5 p-2">
+          <div className="flex flex-inline">
+            <Code className="h-5 w-5 sm:h-6 sm:w-6 mb-2" />
+            <h2 className="text-base sm:text-lg font-bold">&nbsp;&nbsp;ChatGPT Code Converter</h2>
+          </div>
+          <p className="text-xs sm:text-sm text-gray-600">Transform your code between programming languages</p>
+        </div>
+        <div className="col-span-1 p-2 flex align-center justify-center">
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-white hover:text-white outline-none border-none"
+            onClick={() => showDialog(true)}>
+            <ExternalLink className="w-4 h-4 text-gray-600 place-self-center" />
+          </Button>
+        </div>
+      </div>
+      <CardContent className="p-0">
+        <textarea
+          className="w-full h-24 sm:h-32 bg-white p-2 text-sm font-mono outline-none overflow-auto size-fixed min-h-[150px] sm:min-h-[200px]"
+          placeholder="// Write your code here to convert..."
+        />
+      </CardContent>
+      <CardFooter className="bg-gray-100 flex flex-wrap justify-left px-2 py-2 gap-2 border-t border-[#c8c8c8]">
+        {LANGUAGES.map((lang) => (
+          <Button
+            key={lang.id}
+            variant="outline"
+            size="sm"
+            className="text-white bg-[#0284DA] hover:bg-[#0284FF] hover:text-white outline-none"
+            onClick={() => clickFunc(lang.id)}
+          >
+            <WandSparkles className="h-4 w-4 mr-1" /> {lang.name}
+          </Button>
+        ))}
+      </CardFooter>
+    </Card>
+  )
+}
+
+export default ChatGPTCard;
